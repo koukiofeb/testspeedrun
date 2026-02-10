@@ -1,4 +1,3 @@
-/* ===== LIGHT MODE ===== */
 :root{
   --bg:#9ad6ff;
   --card:#fbd000;
@@ -28,7 +27,6 @@ body{
   padding:40px;
 }
 
-/* ===== CONTAINER ===== */
 .container{
   width:100%;
   max-width:1000px;
@@ -64,7 +62,6 @@ h1{
   color:#ffffff;
 }
 
-/* ===== TOGGLE ===== */
 .toggle{
   cursor:pointer;
   width:60px;
@@ -89,7 +86,7 @@ body.dark .toggle span{
   transform:translateX(30px);
 }
 
-/* ===== TABLE ===== */
+/* table */
 table{
   width:100%;
   border-collapse:collapse;
@@ -111,7 +108,6 @@ th{
   font-size:.65rem;
 }
 
-/* ===== BRICK HEADERS ===== */
 .th-brick{
   background-image:var(--brick);
   background-repeat:repeat;
@@ -134,7 +130,6 @@ tbody tr:nth-child(odd){
   color:#ffffff;
 }
 
-/* ===== TRANSITION OVERLAY ===== */
 #transition{
   position: fixed;
   inset: 0;
@@ -154,9 +149,8 @@ body.dark #transition{
   background: rgba(0,0,0,.35);
 }
 
-/* ================================================= */
-/* =============== NES GLITCH EFFECT ================ */
-/* ================================================= */
+
+/* GLITCH  */
 
 @keyframes glitchLines{
   0%   { transform: translateX(0); }
@@ -172,12 +166,12 @@ body.dark #transition{
   100% { opacity:.12; }
 }
 
-/* Glitch global tipo frame NES */
+
 body.switching{
   animation: glitchLines .18s steps(1) 3;
 }
 
-/* Scanlines + ruido */
+
 body.switching::before{
   content:"";
   position: fixed;
@@ -206,5 +200,4 @@ body.dark.switching::before{
     );
 }
 
-/* ===== BRICK GLITCH (CLAVE NES) ===== */
 @keyframes brickJitter{
