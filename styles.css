@@ -37,7 +37,7 @@ body{
 .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 .title{display:flex;align-items:center;gap:16px}
 .title img{width:48px;height:48px;image-rendering:pixelated}
-h1{font-family:'Press Start 2P',monospace;font-size:1.6rem;color:#e52521}
+h1{font-family:'Press Start 2P',monospace;font-size:1.6rem;color:#ffffff}
 
 .toggle{cursor:pointer;width:60px;height:30px;background:#111;border-radius:30px;position:relative}
 .toggle span{position:absolute;top:3px;left:3px;width:24px;height:24px;background:#fff;border-radius:50%;transition:.4s}
@@ -59,4 +59,4 @@ th{font-family:'Press Start 2P',monospace;font-size:.65rem}
 
 .th-rank{width:60px}
 tbody tr:nth-child(odd){background:rgba(0,0,0,.12)}
-.rank{font-weight:bold;color:#e52521}
+.rank{font-weight:bold;color:#ffffff}
