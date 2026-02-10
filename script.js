@@ -14,13 +14,19 @@ if(localStorage.getItem("theme")==="dark"){
 const SHEET_URL =
 "https://docs.google.com/spreadsheets/d/1qiF8kdX4Dt2DUUyCCfUURPvmzFpuPRZsXDExRy-hZJ8/export?format=csv&gid=0";
 
-/* ===== TIME ===== */
 function timeToMs(t){
-  const clean = t.replace(/\r/g,"").trim();
-  const [m,s] = clean.split(":");
-  const [sec,ms="0"] = s.split(".");
-  return (+m*60000)+(+sec*1000)+(+ms);
+  const clean = t
+    .replace(/\r/g,"")
+    .replace(",",".")   // ← ESTE ES EL FIX CLAVE
+    .trim();
+
+  const [m, rest] = clean.split(":");
+  if(!rest) return Infinity;
+
+  const [s, ms="0"] = rest.split(".");
+  return (+m * 60000) + (+s * 1000) + (+ms);
 }
+
 
 async function loadRuns(){
   const body = document.getElementById("tableBody");
