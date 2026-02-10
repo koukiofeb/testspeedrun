@@ -7,7 +7,7 @@ function toggleTheme(){
 
   setTimeout(() => {
     document.body.classList.remove("switching");
-  }, 480);
+  }, 420);
 }
 
 /* link sheet */
