@@ -4,7 +4,7 @@ function toggleTheme(){
 
 /* ===== GOOGLE SHEET (CSV TEXTO PLANO) ===== */
 const SHEET_URL =
-"https://docs.google.com/spreadsheets/d/1qiF8kdX4Dt2DUUyCCfUURPvmzFpuPRZsXDExRy-hZJ8/export?format=csv&gid=0";
+"https://docs.google.com/spreadsheets/d/1L-UkmBCEKi5NKXNTyDWa0_mIjheuIfcS4L2mOGCF9pY/export?format=csv&gid=0";
 
 /* ===== TIME (TEXTO PLANO) ===== */
 function timeToMs(t){
