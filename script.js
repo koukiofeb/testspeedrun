@@ -1,5 +1,13 @@
 function toggleTheme(){
-  document.body.classList.toggle("dark");
+  document.body.classList.add("switching");
+
+  setTimeout(() => {
+    document.body.classList.toggle("dark");
+  }, 120);
+
+  setTimeout(() => {
+    document.body.classList.remove("switching");
+  }, 480);
 }
 
 /* link sheet */
