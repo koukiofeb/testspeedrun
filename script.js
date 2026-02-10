@@ -5,6 +5,7 @@ function toggleTheme(){
 /* link sheet */
 const SHEET_URL =
 "https://docs.google.com/spreadsheets/d/1qiF8kdX4Dt2DUUyCCfUURPvmzFpuPRZsXDExRy-hZJ8/export?format=csv&gid=2093073725";
+const MAX_RUNS = 20;
 
 
 /* time */
@@ -26,7 +27,7 @@ async function loadRuns(){
 
   body.innerHTML = "";
 
-  for(let i = 0; i < Math.min(lines.length, 20); i++){
+  for(let i = 0; i < Math.min(lines.length, MAX_RUNS); i++){
     const cols = lines[i].split(",");
 
     const player = cols[0];
