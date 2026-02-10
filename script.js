@@ -2,14 +2,14 @@ function toggleTheme(){
   document.body.classList.toggle("dark");
 }
 
-/* ===== GOOGLE SHEET CSV ===== */
+/* ===== GOOGLE SHEET (CSV TEXTO PLANO) ===== */
 const SHEET_URL =
 "https://docs.google.com/spreadsheets/d/1qiF8kdX4Dt2DUUyCCfUURPvmzFpuPRZsXDExRy-hZJ8/export?format=csv&gid=0";
 
-/* ===== TIME ===== */
+/* ===== TIME (TEXTO PLANO) ===== */
 function timeToMs(t){
   const [m, rest] = t.split(":");
-  const [s, ms="0"] = rest.split(".");
+  const [s, ms] = rest.split(".");
   return (+m * 60000) + (+s * 1000) + (+ms);
 }
 
@@ -21,30 +21,26 @@ async function loadRuns(){
   const csv = await res.text();
 
   const lines = csv.trim().split(/\r?\n/);
-  lines.shift(); // header
+  lines.shift(); // quitar header
 
   body.innerHTML = "";
 
-  const runs = lines.map(line => {
-    const [player, video, time] =
-      line.split(",").map(v => v.replace(/"/g,"").trim());
+  for(let i = 0; i < lines.length; i++){
+    const cols = lines[i].split(",");
 
-    return { player, video, time };
-  });
+    const player = cols[0];
+    const video  = cols[1];
+    const time   = cols[2];
 
-  runs
-    .map(r => ({ ...r, ms: timeToMs(r.time) }))
-    .sort((a,b)=>a.ms-b.ms)
-    .forEach((r,i)=>{
-      body.innerHTML += `
-        <tr>
-          <td class="rank">${i+1}</td>
-          <td>${r.player}</td>
-          <td><a href="${r.video}" target="_blank">Ver</a></td>
-          <td>${r.time}</td>
-        </tr>
-      `;
-    });
+    body.innerHTML += `
+      <tr>
+        <td class="rank">${i+1}</td>
+        <td>${player}</td>
+        <td><a href="${video}" target="_blank">Ver</a></td>
+        <td>${time}</td>
+      </tr>
+    `;
+  }
 }
 
 loadRuns();
