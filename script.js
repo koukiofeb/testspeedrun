@@ -35,16 +35,18 @@ async function loadRuns(){
       let current = "";
       let insideQuotes = false;
 
-      for(const char of line){
-        if(char === '"'){
-          insideQuotes = !insideQuotes;
-        }else if(char === "," && !insideQuotes){
-          values.push(current);
-          current = "";
-        }else{
-          current += char;
-        }
-      }
+      const separator = line.includes(";") ? ";" : ",";
+
+for(const char of line){
+  if(char === '"'){
+    insideQuotes = !insideQuotes;
+  }else if(char === separator && !insideQuotes){
+    values.push(current);
+    current = "";
+  }else{
+    current += char;
+  }
+}
       values.push(current);
 
       return {
