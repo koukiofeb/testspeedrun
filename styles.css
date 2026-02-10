@@ -13,7 +13,10 @@ body.dark{
   --brick:url('brick-dark.jpg');
 }
 
-*{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+*{
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
+}
 
 body{
   margin:0;
@@ -25,6 +28,7 @@ body{
   padding:40px;
 }
 
+/* ===== CONTAINER ===== */
 .container{
   width:100%;
   max-width:1000px;
@@ -34,20 +38,80 @@ body{
   border:4px solid #000;
 }
 
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.title{display:flex;align-items:center;gap:16px}
-.title img{width:48px;height:48px;image-rendering:pixelated}
-h1{font-family:'Press Start 2P',monospace;font-size:1.6rem;color:#ffffff}
+/* ===== HEADER ===== */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
 
-.toggle{cursor:pointer;width:60px;height:30px;background:#111;border-radius:30px;position:relative}
-.toggle span{position:absolute;top:3px;left:3px;width:24px;height:24px;background:#fff;border-radius:50%;transition:.4s}
-body.dark .toggle span{transform:translateX(30px)}
+.title{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
 
-table{width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden}
-thead{background:#162a7a}
-th,td{padding:14px;text-align:center}
-th{font-family:'Press Start 2P',monospace;font-size:.65rem}
+.title img{
+  width:48px;
+  height:48px;
+  image-rendering:pixelated;
+}
 
+h1{
+  font-family:'Press Start 2P',monospace;
+  font-size:1.6rem;
+  color:#ffffff;
+}
+
+/* ===== TOGGLE ===== */
+.toggle{
+  cursor:pointer;
+  width:60px;
+  height:30px;
+  background:#111;
+  border-radius:30px;
+  position:relative;
+}
+
+.toggle span{
+  position:absolute;
+  top:3px;
+  left:3px;
+  width:24px;
+  height:24px;
+  background:#fff;
+  border-radius:50%;
+  transition:.4s;
+}
+
+body.dark .toggle span{
+  transform:translateX(30px);
+}
+
+/* ===== TABLE ===== */
+table{
+  width:100%;
+  border-collapse:collapse;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+thead{
+  background:#162a7a;
+}
+
+th,td{
+  padding:14px;
+  text-align:center;
+}
+
+th{
+  font-family:'Press Start 2P',monospace;
+  font-size:.65rem;
+}
+
+/* ===== BRICK HEADERS ===== */
 .th-brick{
   background-image:var(--brick);
   background-repeat:repeat;
@@ -57,10 +121,20 @@ th{font-family:'Press Start 2P',monospace;font-size:.65rem}
   text-shadow:2px 2px 0 #000;
 }
 
-.th-rank{width:60px}
-tbody tr:nth-child(odd){background:rgba(0,0,0,.12)}
-.rank{font-weight:bold;color:#ffffff}
+.th-rank{
+  width:60px;
+}
 
+tbody tr:nth-child(odd){
+  background:rgba(0,0,0,.12);
+}
+
+.rank{
+  font-weight:bold;
+  color:#ffffff;
+}
+
+/* ===== TRANSITION OVERLAY ===== */
 #transition{
   position: fixed;
   inset: 0;
@@ -80,50 +154,57 @@ body.dark #transition{
   background: rgba(0,0,0,.35);
 }
 
-@keyframes glitchLines {
-  0%   { transform: translate(0); }
-  20%  { transform: translate(-1px, 0); }
-  40%  { transform: translate(1px, 0); }
-  60%  { transform: translate(-1px, 0); }
-  80%  { transform: translate(1px, 0); }
-  100% { transform: translate(0); }
+/* ================================================= */
+/* =============== NES GLITCH EFFECT ================ */
+/* ================================================= */
+
+@keyframes glitchLines{
+  0%   { transform: translateX(0); }
+  25%  { transform: translateX(-1px); }
+  50%  { transform: translateX(1px); }
+  75%  { transform: translateX(-1px); }
+  100% { transform: translateX(0); }
 }
 
-@keyframes glitchNoise {
-  0%   { opacity: .08; }
-  50%  { opacity: .15; }
-  100% { opacity: .08; }
+@keyframes glitchNoise{
+  0%   { opacity:.12; }
+  50%  { opacity:.22; }
+  100% { opacity:.12; }
 }
 
+/* Glitch global tipo frame NES */
 body.switching{
-  animation: glitchLines .18s steps(2) 2;
+  animation: glitchLines .18s steps(1) 3;
 }
 
+/* Scanlines + ruido */
 body.switching::before{
   content:"";
   position: fixed;
   inset: 0;
+  pointer-events: none;
+  z-index: 998;
   background:
     repeating-linear-gradient(
       to bottom,
-      rgba(0,0,0,.08),
-      rgba(0,0,0,.08) 1px,
+      rgba(0,0,0,.15),
+      rgba(0,0,0,.15) 1px,
       transparent 1px,
       transparent 3px
     );
-  opacity: 0;
-  pointer-events: none;
   animation: glitchNoise .18s steps(2) 2;
-  z-index: 998;
 }
 
 body.dark.switching::before{
   background:
     repeating-linear-gradient(
       to bottom,
-      rgba(255,255,255,.08),
-      rgba(255,255,255,.08) 1px,
+      rgba(255,255,255,.12),
+      rgba(255,255,255,.12) 1px,
       transparent 1px,
       transparent 3px
     );
 }
+
+/* ===== BRICK GLITCH (CLAVE NES) ===== */
+@keyframes brickJitter{
