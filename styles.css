@@ -60,3 +60,22 @@ th{font-family:'Press Start 2P',monospace;font-size:.65rem}
 .th-rank{width:60px}
 tbody tr:nth-child(odd){background:rgba(0,0,0,.12)}
 .rank{font-weight:bold;color:#ffffff}
+
+#transition{
+  position: fixed;
+  inset: 0;
+  background: rgba(255,255,255,.15);
+  backdrop-filter: blur(14px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .45s ease;
+  z-index: 999;
+}
+
+body.switching #transition{
+  opacity: 1;
+}
+
+body.dark #transition{
+  background: rgba(0,0,0,.35);
+}
