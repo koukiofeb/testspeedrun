@@ -2,19 +2,19 @@ function toggleTheme(){
   document.body.classList.toggle("dark");
 }
 
-/* ===== GOOGLE SHEET (CSV TEXTO PLANO) ===== */
+/* link sheet */
 const SHEET_URL =
 "https://docs.google.com/spreadsheets/d/1qiF8kdX4Dt2DUUyCCfUURPvmzFpuPRZsXDExRy-hZJ8/export?format=csv&gid=2093073725";
 
 
-/* ===== TIME (TEXTO PLANO) ===== */
+/* time */
 function timeToMs(t){
   const [m, rest] = t.split(":");
   const [s, ms] = rest.split(".");
   return (+m * 60000) + (+s * 1000) + (+ms);
 }
 
-/* ===== LOAD ===== */
+/* load */
 async function loadRuns(){
   const body = document.getElementById("tableBody");
 
