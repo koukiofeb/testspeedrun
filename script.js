@@ -26,7 +26,7 @@ async function loadRuns(){
 
   body.innerHTML = "";
 
-  for(let i = 0; i < lines.length; i++){
+  for(let i = 0; i < 20; i++){
     const cols = lines[i].split(",");
 
     const player = cols[0];
