@@ -14,10 +14,12 @@ if(localStorage.getItem("theme")==="dark"){
 const SHEET_URL =
 "https://docs.google.com/spreadsheets/d/1qiF8kdX4Dt2DUUyCCfUURPvmzFpuPRZsXDExRy-hZJ8/export?format=csv&gid=0";
 
+/* ===== TIME ===== */
 function timeToMs(t){
-  let [m,r]=t.split(":");
-  let [s,ms]=r.split(".");
-  return (+m*60000)+(+s*1000)+(+ms||0);
+  const clean = t.replace(/\r/g,"").trim();
+  const [m,s] = clean.split(":");
+  const [sec,ms="0"] = s.split(".");
+  return (+m*60000)+(+sec*1000)+(+ms);
 }
 
 async function loadRuns(){
@@ -25,55 +27,58 @@ async function loadRuns(){
 
   try{
     const res = await fetch(SHEET_URL);
-    const csv = await res.text();
+    const raw = await res.text();
 
-    const lines = csv.trim().split("\n");
-    lines.shift();
+    // 🔍 DEBUG VISUAL (clave)
+    console.log("CSV RAW:", raw);
 
-    const runs = lines.map(line => {
-      const values = [];
-      let current = "";
-      let insideQuotes = false;
+    const lines = raw.replace(/\r/g,"").trim().split("\n");
+    if(lines.length < 2){
+      body.innerHTML =
+        "<tr><td colspan='4'>CSV vacío</td></tr>";
+      return;
+    }
 
-      const separator = line.includes(";") ? ";" : ",";
+    const separator = lines[0].includes(";") ? ";" : ",";
 
-for(const char of line){
-  if(char === '"'){
-    insideQuotes = !insideQuotes;
-  }else if(char === separator && !insideQuotes){
-    values.push(current);
-    current = "";
-  }else{
-    current += char;
-  }
-}
-      values.push(current);
+    const runs = lines.slice(1).map(line=>{
+      const cols = line.split(separator).map(v =>
+        v.replace(/^"+|"+$/g,"").trim()
+      );
 
       return {
-        player:(values[0]||"").replace(/"/g,"").trim(),
-        video:(values[1]||"").replace(/"/g,"").trim(),
-        time:(values[2]||"").replace(/"/g,"").trim()
+        player: cols[0] || "",
+        video:  cols[1] || "",
+        time:   cols[2] || ""
       };
-    }).filter(r=>r.player && r.time);
+    }).filter(r => r.player && r.time);
 
-    body.innerHTML="";
+    if(runs.length === 0){
+      body.innerHTML =
+        "<tr><td colspan='4'>No se pudieron leer filas</td></tr>";
+      return;
+    }
+
+    body.innerHTML = "";
 
     runs
-      .map(r=>({...r,ms:timeToMs(r.time)}))
+      .map(r => ({ ...r, ms: timeToMs(r.time) }))
       .sort((a,b)=>a.ms-b.ms)
       .forEach((r,i)=>{
-        body.innerHTML+=`
+        body.innerHTML += `
           <tr>
             <td class="rank">${i+1}</td>
             <td>${r.player}</td>
-            <td>${r.video?`<a href="${r.video}" target="_blank">Ver</a>`:"-"}</td>
+            <td>${r.video ? `<a href="${r.video}" target="_blank">Ver</a>` : "-"}</td>
             <td>${r.time}</td>
-          </tr>`;
+          </tr>
+        `;
       });
 
-  }catch(e){
-    console.error(e);
-    body.innerHTML="<tr><td colspan='4'>Error cargando datos</td></tr>";
+  }catch(err){
+    console.error("FETCH ERROR:", err);
+    body.innerHTML =
+      "<tr><td colspan='4'>Error cargando datos</td></tr>";
   }
 }
 
